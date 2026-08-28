@@ -1,15 +1,28 @@
 const getApiBaseUrl = (): string => {
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, "");
+  let url = process.env.NEXT_PUBLIC_API_URL || "";
+
+  if (!url) {
+    if (
+      typeof window !== "undefined" &&
+      !window.location.hostname.includes("localhost") &&
+      !window.location.hostname.includes("127.0.0.1")
+    ) {
+      url = "https://college-rag-backend-64ny.onrender.com/api/v1";
+    } else {
+      url = "http://localhost:8000/api/v1";
+    }
   }
-  if (
-    typeof window !== "undefined" &&
-    !window.location.hostname.includes("localhost") &&
-    !window.location.hostname.includes("127.0.0.1")
-  ) {
-    return "https://college-rag-backend-64ny.onrender.com/api/v1";
+
+  // Remove trailing slashes
+  url = url.replace(/\/+$/, "");
+
+  // CRITICAL: Auto-upgrade http:// to https:// for cloud/production domains
+  // Browsers block unencrypted HTTP requests from HTTPS pages (Mixed Content security error)
+  if (url.startsWith("http://") && !url.includes("localhost") && !url.includes("127.0.0.1")) {
+    url = url.replace("http://", "https://");
   }
-  return "http://localhost:8000/api/v1";
+
+  return url;
 };
 
 export interface User {
