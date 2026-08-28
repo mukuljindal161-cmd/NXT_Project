@@ -1,6 +1,16 @@
-const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
-// Ensure no trailing slash on base URL
-const API_BASE_URL = rawBaseUrl.replace(/\/+$/, "");
+const getApiBaseUrl = (): string => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, "");
+  }
+  if (
+    typeof window !== "undefined" &&
+    !window.location.hostname.includes("localhost") &&
+    !window.location.hostname.includes("127.0.0.1")
+  ) {
+    return "https://college-rag-backend-64ny.onrender.com/api/v1";
+  }
+  return "http://localhost:8000/api/v1";
+};
 
 export interface User {
   id: string;
@@ -93,6 +103,10 @@ export interface AnalyticsOverview {
 }
 
 class ApiClient {
+  private get baseUrl(): string {
+    return getApiBaseUrl();
+  }
+
   private getHeaders(isJson: boolean = true): HeadersInit {
     const headers: Record<string, string> = {};
     if (isJson) {
@@ -110,7 +124,7 @@ class ApiClient {
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const isFormData = options.body instanceof FormData;
     const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
-    const url = `${API_BASE_URL}${cleanEndpoint}`;
+    const url = `${this.baseUrl}${cleanEndpoint}`;
     let res: Response;
 
     try {
@@ -123,7 +137,7 @@ class ApiClient {
         },
       });
     } catch (netErr: any) {
-      const isRender = API_BASE_URL.includes("onrender.com");
+      const isRender = this.baseUrl.includes("onrender.com");
       const hint = isRender
         ? " (Note: Render free services may take ~30-50s to wake up on the first request. Please wait a moment and try again)."
         : "";
