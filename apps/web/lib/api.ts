@@ -1,4 +1,6 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+// Ensure no trailing slash on base URL
+const API_BASE_URL = rawBaseUrl.replace(/\/+$/, "");
 
 export interface User {
   id: string;
@@ -107,7 +109,8 @@ class ApiClient {
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const isFormData = options.body instanceof FormData;
-    const url = `${API_BASE_URL}${endpoint}`;
+    const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+    const url = `${API_BASE_URL}${cleanEndpoint}`;
     let res: Response;
 
     try {
@@ -120,8 +123,12 @@ class ApiClient {
         },
       });
     } catch (netErr: any) {
+      const isRender = API_BASE_URL.includes("onrender.com");
+      const hint = isRender
+        ? " (Note: Render free services may take ~30-50s to wake up on the first request. Please wait a moment and try again)."
+        : "";
       throw new Error(
-        "Could not connect to the College Assistant backend API (http://localhost:8000). Please make sure the FastAPI backend is running."
+        `Could not connect to backend API at ${url}. Please verify that the backend server is active and reachable${hint}`
       );
     }
 
