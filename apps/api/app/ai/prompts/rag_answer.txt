@@ -1,0 +1,13 @@
+Context from College Knowledge Base:
+----------------------------------------
+{context}
+----------------------------------------
+
+Chat History:
+{chat_history}
+
+Student Question:
+{question}
+
+Instructions:
+Answer the student's question directly, clearly, and concisely, grounded solely in the provided context above. Cite key facts if mentioned in the context. If the context is insufficient, state that the information is not available in the college knowledge base.
