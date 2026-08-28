@@ -1,139 +1,226 @@
-# 🎓 College RAG Assistant — Production Knowledge Base
+# 🎓 College RAG Assistant
 
-A production-quality, enterprise-grade academic information assistant that answers student and administrative questions **strictly grounded in official institution documents** (PDFs, DOCX, TXT) using **Retrieval-Augmented Generation (RAG)** and **pgvector**.
-
----
-
-## 🌟 Key Features
-
-- **Strict Grounding & Zero Hallucination**: QueryRouter, Vector Similarity Thresholding (`>= 0.65`), and deterministic Evidence Validation prevent fabricated dates, fees, or policies.
-- **Verifiable Source Citations**: Every answer displays clickable citations with document names, page numbers, and cosine similarity match scores.
-- **Fast SSE Token Streaming**: Real-time response streaming with Server-Sent Events (SSE) and progressive UI rendering.
-- **Role-Based Security**: Complete separation between student access and administrative control (document ingestion, collection partitioning, job tracking).
-- **Multi-Format Ingestion**: Supports `.pdf`, `.docx`, `.txt`, and `.md` with page-aware extraction and structure-aware chunking.
-- **Flexible AI Abstraction**: First-class support for **Google Gemini API** (`gemini-1.5-flash`, `text-embedding-004`) with deterministic offline Mock fallback for zero-config testing.
+An AI-powered college information chatbot that uses **Retrieval-Augmented Generation (RAG)** to answer student queries from official college documents such as notices, PDFs, FAQs, academic calendars, fee documents, and policies.
 
 ---
 
-## 🏗️ Tech Stack
+## 1. Project Name
 
-- **Frontend**: Next.js 15+ (App Router), React 19, TypeScript, Tailwind CSS, Lucide Icons, React-Markdown.
-- **Backend API**: FastAPI (Python 3.12+), SQLAlchemy 2.0, Pydantic v2, Alembic, Uvicorn.
-- **Database & Vectors**: PostgreSQL 16 with `pgvector` extension for 768-dimensional cosine vector similarity search.
-- **Task Queue & Cache**: Celery & Redis.
-- **Storage Layer**: Local filesystem storage with sanitization (or GCS/S3 in production).
+**College RAG Assistant**
+
+**RAG-Based College Information Chatbot**
 
 ---
 
-## 🚀 Quick Start (Local Setup)
+## 2. Problem Statement
 
-### Option 1: Run with Docker Compose (Recommended)
+Students often have difficulty finding information about college admissions, courses, fees, examinations, scholarships, hostel, library, placements, and other activities because the information is spread across multiple documents.
 
-The easiest way to run the entire full-stack system is using Docker Compose:
-
-1. **Clone & Navigate to the Project:**
-   ```bash
-   cd "c:\Users\Mukul Jindal\OneDrive\Desktop\Project Folder"
-   ```
-
-2. **Start All Services:**
-   ```bash
-   docker-compose up --build
-   ```
-
-3. **Access the Applications:**
-   - **Frontend Web Portal**: [http://localhost:3000](http://localhost:3000)
-   - **FastAPI Interactive Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
-   - **API Health Check**: [http://localhost:8000/api/v1/health](http://localhost:8000/api/v1/health)
+The **College RAG Assistant** provides a single AI-powered platform where students can ask questions in natural language and receive answers based on the college's uploaded documents, along with relevant sources.
 
 ---
 
-### Option 2: Run Bare-Metal (Python + Node.js)
+## 3. Features
 
-#### 1. Start PostgreSQL (with pgvector) & Redis
+### Core Features
+
+* User authentication
+* Student and Admin roles
+* AI-powered chat interface
+* PDF/DOCX/TXT document upload
+* Automatic document processing
+* Text extraction and chunking
+* Embedding generation
+* Vector similarity search using pgvector
+* RAG-based answer generation
+* Source/reference display
+* Unknown-question handling
+* Chat history
+* Admin document management
+* Document re-indexing
+* Streaming AI responses
+* Responsive web interface
+
+### Bonus Features
+
+* Department-wise document collections
+* Hybrid search
+* Document re-ranking
+* Answer feedback
+* Suggested questions
+* Admin analytics
+* Multilingual support
+* Document version management
+
+---
+
+## 4. Technology Stack
+
+| Category        | Technologies                             |
+| --------------- | ---------------------------------------- |
+| Frontend        | Next.js, React, TypeScript, Tailwind CSS |
+| Backend         | Python, FastAPI                          |
+| Database        | PostgreSQL + pgvector                    |
+| AI              | Google Gemini API                        |
+| Embeddings      | Gemini Embedding API                     |
+| Background Jobs | Celery + Redis                           |
+| Storage         | Local Storage / Google Cloud Storage     |
+| Authentication  | Secure Session-based Authentication      |
+| Deployment      | Vercel + Cloud Backend                   |
+
+---
+
+## 5. Screenshots
+
+### Home Page
+
+![Home Page](<img width="1910" height="967" alt="image" src="https://github.com/user-attachments/assets/d60c71f7-ed40-4144-bc8b-51baed2fc617" />)
+
+### Chat Interface
+
+![Chat Interface](<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/8e44ba69-c068-4311-afc1-05b904533afc" />)
+
+### RAG Answer with Sources
+
+![RAG Answer](<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/752b9931-a68f-4648-81dc-0f4f2ba25ce2" />)
+
+### Mobile View
+
+![Mobile View](<img width="391" height="856" alt="image" src="https://github.com/user-attachments/assets/825c4cf4-09ca-4536-a530-665b1304e05e" />)
+
+---
+
+## 6. Live Demo
+
+**Vercel URL:**
+`[https://your-project.vercel.app](https://college-rag-assistant-theta.vercel.app/)`
+
+---
+
+## 7. Backend
+
+**Backend/API URL:**
+`https://your-backend-url.com`
+
+---
+
+## 8. Setup Instructions
+
+### 1. Clone the repository
+
 ```bash
-docker-compose up -d postgres redis
+git clone <repository-url>
+cd college-rag-chatbot
 ```
 
-#### 2. Backend Setup (FastAPI)
-```bash
-# Create and activate Python virtual environment
-python -m venv venv
-# On Windows (PowerShell):
-.\venv\Scripts\Activate.ps1
-# On Linux/macOS:
-source venv/bin/activate
+### 2. Install dependencies
 
-# Install dependencies
-pip install -r apps/api/requirements.txt
+Frontend:
 
-# Run Database Migrations
-cd apps/api
-alembic upgrade head
-cd ../..
-
-# Seed Database with Admin, Student & Sample College Documents
-python scripts/seed.py
-
-# Start FastAPI server
-cd apps/api
-uvicorn app.main:app --reload --port 8000
-```
-
-#### 3. Frontend Setup (Next.js)
-Open a new terminal window:
 ```bash
 cd apps/web
 npm install
+```
+
+Backend:
+
+```bash
+cd apps/api
+pip install -r requirements.txt
+```
+
+### 3. Configure environment variables
+
+Create `.env` files using the provided `.env.example` files.
+
+### 4. Start PostgreSQL and Redis
+
+Using Docker:
+
+```bash
+docker compose up -d
+```
+
+### 5. Run database migrations
+
+```bash
+alembic upgrade head
+```
+
+### 6. Start the backend
+
+```bash
+uvicorn app.main:app --reload
+```
+
+### 7. Start the frontend
+
+```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
+The application will be available at:
 
-## 🔐 Default Demo Accounts (Seed Data)
-
-The seed script automatically populates test accounts and official college manuals (Academic Calendars, Fee Schedules, Hostel Rules, and Library Policies):
-
-| Role | Email | Password | Permissions |
-|---|---|---|---|
-| **Admin** | `admin@example.edu` | `AdminPass123!` | Document upload/delete/reindex, Collections, Jobs, Analytics |
-| **Student** | `student@example.edu` | `StudentPass123!` | Interactive grounded chat, Conversations history, Citations |
-
----
-
-## 🧪 Running Automated Tests
-
-Run the complete backend test suite:
-```bash
-pytest apps/api/tests
-```
-
-Run test suite with verbose output:
-```bash
-pytest apps/api/tests -v
+```text
+http://localhost:3000
 ```
 
 ---
 
-## 📖 System Documentation
+## 9. Environment Variables Rquired
 
-Detailed technical design and reference documents:
-- [System Architecture](file:///c:/Users/Mukul%20Jindal/OneDrive/Desktop/Project%20Folder/docs/architecture.md)
-- [RAG Pipeline & Grounding Rules](file:///c:/Users/Mukul%20Jindal/OneDrive/Desktop/Project%20Folder/docs/rag.md)
-- [API Reference](file:///c:/Users/Mukul%20Jindal/OneDrive/Desktop/Project%20Folder/docs/api.md)
-- [Local Development Guide](file:///c:/Users/Mukul%20Jindal/OneDrive/Desktop/Project%20Folder/docs/development.md)
+The following environment variables are required:
+
+```env
+DATABASE_URL=
+REDIS_URL=
+SECRET_KEY=
+GEMINI_API_KEY=
+LLM_MODEL=
+EMBEDDING_MODEL=
+STORAGE_PROVIDER=
+STORAGE_BUCKET=
+NEXT_PUBLIC_API_URL=
+```
+---
+
+## RAG Pipeline
+
+The core functionality of the project follows:
+
+```text
+College Documents
+       ↓
+Text Extraction
+       ↓
+Chunking
+       ↓
+Embeddings
+       ↓
+PostgreSQL + pgvector
+       ↓
+Semantic Search
+       ↓
+Relevant Context
+       ↓
+Google Gemini
+       ↓
+Answer + Sources
+```
+
+This ensures that the chatbot answers questions using the college's knowledge base rather than relying only on the LLM's general knowledge.
 
 ---
 
-## 🛡️ RAG Grounding Verification Flow
+## Project Status
 
-To verify that the system is strictly performing true RAG:
-1. Sign in as `admin@example.edu` at [http://localhost:3000/login](http://localhost:3000/login).
-2. Go to **Admin Console -> Documents** and upload a new PDF/DOCX policy.
-3. Observe the ingestion job in **Ingestion Jobs** transitioning to `COMPLETED` and the document becoming `READY`.
-4. Sign in as `student@example.edu` at [http://localhost:3000/chat](http://localhost:3000/chat).
-5. Ask: *"What is the last date to submit the semester fee without penalty?"*
-6. Notice the streaming answer citing the exact document name, page number, and similarity score.
-7. Ask an unsupported question: *"How do I bake a pizza?"*
-8. Notice the assistant strictly rejects off-topic queries in accordance with grounding rules.
+**Status:** 🚀 Completed
+
+👨‍💻 Developer
+Mukul Jindal
+
+GitHub: https://github.com/mukuljindal161-cmd
+
+LinkedIn: https://www.linkedin.com/in/mukuljindal07/
+
+⭐ Feel free to explore and share your feedback!
