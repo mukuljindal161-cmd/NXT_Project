@@ -72,35 +72,27 @@ The **College RAG Assistant** provides a single AI-powered platform where studen
 
 ## 5. Screenshots
 
-### Home Page
+### Home Page- <img width="1910" height="967" alt="image" src="https://github.com/user-attachments/assets/d60c71f7-ed40-4144-bc8b-51baed2fc617" />
 
-![Home Page](<img width="1910" height="967" alt="image" src="https://github.com/user-attachments/assets/d60c71f7-ed40-4144-bc8b-51baed2fc617" />)
+### Chat Interface- (<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/8e44ba69-c068-4311-afc1-05b904533afc" />
 
-### Chat Interface
+### RAG Answer with Sources- <img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/752b9931-a68f-4648-81dc-0f4f2ba25ce2" />
 
-![Chat Interface](<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/8e44ba69-c068-4311-afc1-05b904533afc" />)
-
-### RAG Answer with Sources
-
-![RAG Answer](<img width="1917" height="971" alt="image" src="https://github.com/user-attachments/assets/752b9931-a68f-4648-81dc-0f4f2ba25ce2" />)
-
-### Mobile View
-
-![Mobile View](<img width="391" height="856" alt="image" src="https://github.com/user-attachments/assets/825c4cf4-09ca-4536-a530-665b1304e05e" />)
+### Mobile View- <img width="391" height="856" alt="image" src="https://github.com/user-attachments/assets/825c4cf4-09ca-4536-a530-665b1304e05e" />
 
 ---
 
 ## 6. Live Demo
 
 **Vercel URL:**
-`[https://your-project.vercel.app](https://college-rag-assistant-theta.vercel.app/)`
+https://college-rag-assistant-theta.vercel.app/
 
 ---
 
 ## 7. Backend
 
 **Backend/API URL:**
-`https://your-backend-url.com`
+https://college-rag-backend-64ny.onrender.com
 
 ---
 
